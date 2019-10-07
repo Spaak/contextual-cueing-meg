@@ -14,6 +14,8 @@ run_mode = 'slavepool';
 data_dir = '/project/3018029.07/';
 results_dir = '/home/predatt/eelspa/ctxcue/4archiving/results/';
 
+mkdir(results_dir);
+
 set_path();
 
 if strcmp(run_mode, 'slavepool')
