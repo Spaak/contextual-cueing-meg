@@ -18,7 +18,7 @@ cd fieldtrip
 git checkout 6414ea000dcf5bba0ec43ce6487e3425e480b161
 ```
 
-PyMC3 version used for the paper for is [24730cc](https://github.com/Spaak/pymc3/tree/24730cc360852e27020f5b7c5ca07d3791ccb167), for Theano it's [93e8180](https://github.com/Theano/Theano/tree/93e8180bf08b6fbe587b6f0ecc877ec90e6e1681).)
+PyMC3 version used for the paper for is [24730cc](https://github.com/Spaak/pymc3/tree/24730cc360852e27020f5b7c5ca07d3791ccb167), for Theano it's [93e8180](https://github.com/Theano/Theano/tree/93e8180bf08b6fbe587b6f0ecc877ec90e6e1681).
 
 ### Installing and basic setup
 
@@ -75,3 +75,7 @@ The analysis code starts either from the intermediate results (when `run_mode` e
 You will probably need to change the default `rootdir` inside `datainfo` to point to the data from the repository.
 
 Note that there are also a few files included in `preproc` related to the preprocessing of anatomical (MRI) data for the source analysis steps. You will not be able to run this code without the individual MRI images and headshape (Polhemus) files, which are not provided in the data repository due to privacy reasons. The resulting volume conduction and source models _are_ included as intermediate files.
+
+## License
+
+This code is released as Open Source software under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html).

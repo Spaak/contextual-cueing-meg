@@ -12,7 +12,7 @@ cfg = ft_definetrial(cfg);
 
 [stim,~,~] = load_behav(subj_id);
 
-addpath ../expscripts-v4;
+addpath ../../expscripts;
 
 % The MEG recording will contain the practice trials as well, which we
 % don't want. There might be different numbers of practice trials among
