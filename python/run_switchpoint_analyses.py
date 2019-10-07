@@ -9,7 +9,7 @@ import batch
 
 
 run_mode = 'qsub'
-working_dir = '~/ctxcue/analysis-python-4archiving'
+working_dir = '~/ctxcue/4archiving/python'
 
 
 model_types = ('noctxcue', 'nosp', 'sp', 'linear', 'blocklinear', 'quadratic')
@@ -28,35 +28,43 @@ def qsub(reqstring, module, fun, *args, **kwargs):
         # escape the python script so that ' is output correctly by echo
         pythonscript = pythonscript.replace("'", "'\\''")
         
-        # Note that this python call explicitly sets the python path by loading
-        # the ~/condapath4jobs file. This should not normally be necessary,
-        # since Torque should take care of path inheritance. Unfortunately, it
-        # turns out that sometimes this fails so set the path explicitly in the
-        # slave jobs.
-        pythoncmd = 'source ~/condapath4jobs; cd {}; python -c "{}"'.format(
+        pythoncmd = 'cd {}; python -c "{}"'.format(
             working_dir, pythonscript)
         #pythoncmd = 'cd {}; python -c "{}"'.format(working_dir, pythonscript)
         
-        qsubcmd = 'qsub -l {} -N j{}_{}'.format(reqstring, thisargs[0], fun)
+        qsubcmd = 'qsub -V -l {} -N j{}_{}'.format(reqstring, thisargs[0], fun)
         fullcmd = 'echo \'{}\' | {}'.format(pythoncmd, qsubcmd)
         
         os.system(fullcmd)
     
     
-def run_samplers():
+def run_samplers(skip_existing=False):
+    # Actually run the MCMC samplers, either on a Torque cluster
+    # or in-process (depending on module variable 'run_mode'.
+    # skip_existing allows you to run only those samplers that have not
+    # been run successfully, e.g. due to Torque cluster instability/timeouts.
     subject_ids = list(range(36))
     detrend_blockwise = (False, True)
+    filepattern = analysis.rootdir + '/processed/python-scratch/{}_trace_sub{:02d}_detrend_blockwise={}.pkl.gz'
     
-    if run_mode == 'qsub':
-        for mt, db in it.product(model_types, detrend_blockwise)
-            myqsub.qsub('mem=6gb,walltime=00:45:00,nodes=1:intel:ppn=4',
-                'analysis', 'sample_and_save_subj', list(range(36)),
-                model_type=mt, detrend_blockwise=db)
-    else:
-        for mt, db, sub_id in it.product(model_types, detrend_blockwise,
-            subject_ids):
-        analysis.sample_and_save_subj(sub_id, model_type=mt,
-            detrend_blockwise=db)
+    for mt, db in it.product(model_types, detrend_blockwise):
+        if skip_existing:
+            this_ids = []
+            for sub_id in subject_ids:
+                if not os.path.isfile(filepattern.format(mt, sub_id, db)):
+                    this_ids.append(sub_id)
+        else:
+            this_ids = subject_ids
+            
+        if run_mode == 'qsub':
+            if len(this_ids) > 0:
+                qsub('mem=6gb,walltime=00:45:00,nodes=1:intel:ppn=4',
+                    'analysis', 'sample_and_save_subj', this_ids,
+                    model_type=mt, detrend_blockwise=db)
+        else:
+            for sub_id in this_ids:
+                analysis.sample_and_save_subj(sub_id, model_type=mt,
+                    detrend_blockwise=db)
     
     
 def do_model_comparison_and_export():
@@ -65,8 +73,10 @@ def do_model_comparison_and_export():
     for db in detrend_blockwise:
         # load traces
         alltrace, allmodel = list(zip(*[analysis.load_traces(mt,
-            detrend_blockwise=db, do_wait=True) for mt in model_types]))
-        allwaic = [batch.starmap(pm.waic, zip(tr, mod))
+            detrend_blockwise=db, do_wait=False) for mt in model_types]))
+        # can set in_process=False to use multiprocessing (8 processed by default)
+        # this sometimes is not even faster due to Theano compiledir locks
+        allwaic = [batch.starmap(pm.waic, zip(tr, mod), in_process=True)
             for tr, mod in zip(alltrace, allmodel)]
         
         npwaic = np.asarray([[x.WAIC for x in y] for y in allwaic])
@@ -74,7 +84,7 @@ def do_model_comparison_and_export():
             '/processed/combined/npwaic-blockwisedetrend={}.txt'.format(db),
             npwaic)
         
-        if ~detrend_blockwise:
+        if not detrend_blockwise:
             # also export raw switchpoint samples
             sp_ind = model_types.index('sp')
             allsp = np.asarray([x['switchpoint'] for x in alltrace[sp_ind]])

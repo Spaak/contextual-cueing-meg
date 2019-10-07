@@ -20,7 +20,7 @@ def load_traces(model_type, detrend_blockwise=False, do_wait=False):
     # load sampler results
     # do_wait indicates whether to wait until all results are available, or to
     # raise an exception in case a file is not found.
-    filepattern = 'scratch/{}_trace_sub{:02d}_detrend_blockwise={}.pkl.gz'
+    filepattern = rootdir + '/processed/python-scratch/{}_trace_sub{:02d}_detrend_blockwise={}.pkl.gz'
     nsub = 36
     alltrace = []
     allmodel = []
@@ -44,7 +44,7 @@ def load_traces(model_type, detrend_blockwise=False, do_wait=False):
 
 def fetch_data():
     # load the data
-    matdat = sio.loadmat(rootdir + '/processed/combined/matlab/all-rt-dat-for-modelling.mat',
+    matdat = sio.loadmat(rootdir + '/processed/combined/all-rt-dat-for-modelling.mat',
         squeeze_me=True)
     
     allrts = list(matdat['allrts'])
@@ -98,17 +98,19 @@ def sample_and_save_subj(sub_id, model_type='sp', detrend_blockwise=False):
     elif model_type == 'quadratic':
         trace, model = do_sampling_quadratic(resid, allinds[sub_id], allcond[sub_id])
     
+    tracedir = rootdir + '/processed/python-scratch'
+    plotdir = tracedir + '/plots'
     with model:
         pm.traceplot(trace)
-        plt.savefig('plots/{}_trace_sub{:02d}_detrend_blockwise={}.png'.format(model_type, sub_id, detrend_blockwise))
+        plt.savefig(plotdir + '/{}_trace_sub{:02d}_detrend_blockwise={}.png'.format(model_type, sub_id, detrend_blockwise))
         plt.close('all')
         
         ppc = pm.sample_posterior_predictive(trace, samples=1000)
         ppc_plot(allrts[sub_id], allinds[sub_id], allcond[sub_id], ppc)
-        plt.savefig('plots/{}_ppc_sub{:02d}_detrend_blockwise={}.png'.format(model_type, sub_id, detrend_blockwise))
+        plt.savefig(plotdir + '/{}_ppc_sub{:02d}_detrend_blockwise={}.png'.format(model_type, sub_id, detrend_blockwise))
         plt.close('all')
         
-        with gzip.open('scratch/{}_trace_sub{:02d}_detrend_blockwise={}.pkl.gz'.format(model_type, sub_id, detrend_blockwise), 'wb') as f:
+        with gzip.open(tracedir + '/{}_trace_sub{:02d}_detrend_blockwise={}.pkl.gz'.format(model_type, sub_id, detrend_blockwise), 'wb') as f:
             pickle.dump((trace, model), f)
 
 
