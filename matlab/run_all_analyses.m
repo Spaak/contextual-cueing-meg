@@ -10,9 +10,11 @@
 % Behavioural analyses (with the exception of the Bayesian modelling) are
 % all very fast and will always be done in-process.
 
-run_mode = 'slavepool';
+run_mode = 'load-only';
 data_dir = '/project/3018029.07/';
 results_dir = '/home/predatt/eelspa/ctxcue/4archiving/results/';
+
+call_python = false;
 
 mkdir(results_dir);
 
@@ -28,8 +30,10 @@ run_analyses_behaviour_main(results_dir, all_ids);
 
 export_behaviour_data_for_modelling(all_ids, rootdir);
 
-% actual MCMC sampling is done in Python
-system('cd ../python; python run_switchpoint_analyses.py');
+if call_python
+  % actual MCMC sampling is done in Python
+  system('cd ../python; python run_switchpoint_analyses.py');
+end
 
 run_analyses_behaviour_modelling(results_dir, rootdir);
 
