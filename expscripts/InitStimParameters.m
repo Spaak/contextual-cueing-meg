@@ -44,7 +44,9 @@ stim.num_tri_total = stim.num_blocks * stim.num_tri_per_block;
 % with some jitter
 stim.grid_x = linspace(-9, 9, 8);     % deg
 stim.grid_y = linspace(-6, 6, 6);     % deg
-stim.grid = combvec(stim.grid_x, stim.grid_y)';
+stim.grid = fliplr(allcomb(stim.grid_y, stim.grid_x)); % all combinations of x/y to create grid
+% note the fliplr is there to preserve compatibility with calls to
+% combvec() which are now removed due to licensing
 stim.max_jitter = 0.4; % deg
 stim.num_stimuli = 10;
 
