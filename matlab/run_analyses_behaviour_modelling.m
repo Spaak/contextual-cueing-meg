@@ -74,7 +74,7 @@ ylim([-2.5 2.5]);
 set(ax, 'xticklabel', {});
 
 % save figure
-print('-r150', '-fillpage', f, fullfile(results_dir, '006-behav-modelling-waic-fig2.pdf'), '-dpdf');
+print('-r150', '-fillpage', f, fullfile(results_dir, '007-behav-modelling-waic-fig2bc.pdf'), '-dpdf');
 close(f);
 
 
@@ -86,7 +86,7 @@ f.PaperPosition = [0 0 40 40];
 f.PaperSize = [40 40];
 paired_scatters(normwaic, models);
 
-print('-r150', '-fillpage', f, fullfile(results_dir, '007-behav-modelling-waic-pairwise.pdf'), '-dpdf');
+print('-r150', '-fillpage', f, fullfile(results_dir, '009-behav-modelling-waic-pairwise.pdf'), '-dpdf');
 close(f);
 
 

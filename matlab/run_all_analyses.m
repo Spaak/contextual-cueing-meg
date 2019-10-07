@@ -4,6 +4,9 @@
 % a slave pool running on the cluster (one long-running daemon job per
 % subject, keeping that subject's data in memory; execute jobs as instructed 
 % by the master script; fastest option).
+% Alternatively, you can specify run_mode = 'load-only' to not execute the
+% individual jobs starting from raw data at all, and instead load the
+% intermediate results that should already be on disk.
 % Behavioural analyses (with the exception of the Bayesian modelling) are
 % all very fast and will always be done in-process.
 

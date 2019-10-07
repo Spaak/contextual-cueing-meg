@@ -15,6 +15,7 @@ detrend_and_log = 1;
 for k = 1:numel(all_ids)
   behav(k) = behav_single_subj(all_ids(k), smoothblocks, use_blocks, detrend_and_log);
   behav_nolog(k) = behav_single_subj(all_ids(k), smoothblocks, use_blocks, 0);
+  behav_allblocks(k) = behav_single_subj(all_ids(k), smoothblocks, 1:22, detrend_and_log);
 end
 
 
@@ -157,5 +158,38 @@ f = fopen(fullfile(results_dir, '005-behav-mean-std-acc-rt.txt'), 'wt');
 % wihtout the <html> tags
 fprintf(f, regexprep(evalc('disp(T)'), '<.*?>', ''));
 fclose(f);
+
+
+%% individual learning curves of Old vs New reaction time
+
+% subj X block X cond
+rts = cat(3, cat(1, behav_allblocks.medblockrt_old), cat(1, behav_allblocks.medblockrt_new));
+rts = rts(:,:,2) - rts(:,:,1);
+
+mu = squeeze(mean(rts, 1));
+ci = std(rts, [], 1) ./ sqrt(size(rts, 1));
+
+f = figure();
+ax = gca();
+
+set(ax, 'color', 'none', 'xtick', [1 5 10 15 20 22]);
+xlim([0 22]);
+hold on;
+
+% plot individual
+plot(blk, rts', 'color', [0 0 0 0.1]);
+
+[hl,~] = boundedline(blk, mu, ci, 'ks-', 'alpha');
+set(hl, 'markerfacecolor', get(hl, 'color'), 'markersize', 3);
+
+hold on;
+plot(blk, zeros(size(blk)), 'k--');
+
+xlabel('Block');
+ylabel('Reaction time New - Old (log(RT/s))');
+
+% save figure
+print('-r150', '-bestfit', f, fullfile(results_dir, '006-behav-rteffect-individuals-fig2a.pdf'), '-dpdf');
+close(f);
 
 end

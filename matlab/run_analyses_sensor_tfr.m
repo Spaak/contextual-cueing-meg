@@ -49,7 +49,7 @@ mytfrclusterplot(stat, 0.05, 1, plot_posclus, plot_negclus);
 
 f = gcf();
 % save figure
-print('-r150', '-fillpage', f, fullfile(results_dir, '009-sensor-tfr-cluster-fig3a.pdf'), '-dpdf');
+print('-r150', '-fillpage', f, fullfile(results_dir, '010-sensor-tfr-cluster-fig3a.pdf'), '-dpdf');
 close(f);
 
 
@@ -73,7 +73,7 @@ Tests = {'Cluster-based permutation test Old vs New TFR', 'Control test with evo
 Pval = [min(stat.prob(:)); min(stat_evoked.prob(:))];
 
 T = table(Tests, Pval);
-f = fopen(fullfile(results_dir, '010-sensor-tfr-cluster-tests.txt'), 'wt');
+f = fopen(fullfile(results_dir, '011-sensor-tfr-cluster-tests.txt'), 'wt');
 % disp(T) gives nice textual summary, which we want to put in a file, but
 % wihtout the <html> tags
 fprintf(f, regexprep(evalc('disp(T)'), '<.*?>', ''));

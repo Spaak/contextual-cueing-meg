@@ -79,7 +79,7 @@ for axnum = 1:2
 end
 
 % save figure
-print('-r150', '-bestfit', f, fullfile(results_dir, '013-source-theta-rois-oldnew-fig3c.pdf'), '-dpdf');
+print('-r150', '-bestfit', f, fullfile(results_dir, '014-source-theta-rois-oldnew-fig3c.pdf'), '-dpdf');
 close(f);
 
 
@@ -147,7 +147,7 @@ ylim([-0.05 0.1]);
 xlim([0 22]);
 
 % save figure
-print('-r150', '-bestfit', f, fullfile(results_dir, '014-source-theta-rois-withrt-fig4a.pdf'), '-dpdf');
+print('-r150', '-bestfit', f, fullfile(results_dir, '015-source-theta-rois-withrt-fig4a.pdf'), '-dpdf');
 close(f);
 
 
@@ -211,7 +211,7 @@ xlim([-7 7]);
 ylim([-0.05 0.1]);
 
 % save figure
-print('-r150', '-bestfit', f, fullfile(results_dir, '015-source-theta-rois-withrt-switchpoint-fig4b.pdf'), '-dpdf');
+print('-r150', '-bestfit', f, fullfile(results_dir, '016-source-theta-rois-withrt-switchpoint-fig4b.pdf'), '-dpdf');
 close(f);
 
 
@@ -242,7 +242,7 @@ f = figure();
 paired_scatters(pow_frontal);
 suptitle('Frontal theta power');
 
-print('-r150', '-fillpage', f, fullfile(results_dir, '016-source-theta-rois-frontal-condwise.pdf'), '-dpdf');
+print('-r150', '-fillpage', f, fullfile(results_dir, '017-source-theta-rois-frontal-condwise.pdf'), '-dpdf');
 close(f);
 
 
@@ -295,7 +295,7 @@ linkaxes([ax(1) ax(3)], 'x');
 linkaxes([ax(2) ax(4)], 'x');
 
 % save figure
-print('-r150', '-bestfit', f, fullfile(results_dir, '017-source-theta-rois-scatters-fig4c.pdf'), '-dpdf');
+print('-r150', '-bestfit', f, fullfile(results_dir, '018-source-theta-rois-scatters-fig4c.pdf'), '-dpdf');
 close(f);
 
 
@@ -329,7 +329,7 @@ Test{end+1} = 'Across-item Corr Frontal Pow X log(RT)';
 %% store test results in text file
 
 T = table(Test, Tstat, Df, PVal, BF10);
-f = fopen(fullfile(results_dir, '018-source-theta-rois-tests.txt'), 'wt');
+f = fopen(fullfile(results_dir, '019-source-theta-rois-tests.txt'), 'wt');
 % disp(T) gives nice textual summary, which we want to put in a file, but
 % wihtout the <html> tags, and with NaN replaced by ''
 fprintf(f, strrep(regexprep(evalc('disp(T)'), '<strong>|</strong>', ''), 'NaN', '   '));

@@ -139,7 +139,7 @@ for axnum = 1:2
 end
 
 % save figure
-print('-r150', '-fillpage', f, fullfile(results_dir, '019-behav-recogtask.pdf'), '-dpdf');
+print('-r150', '-fillpage', f, fullfile(results_dir, '020-behav-recogtask.pdf'), '-dpdf');
 close(f);
 
 
@@ -298,7 +298,7 @@ Pval = Pval';
 BF10 = BF10';
 
 T = table(Test, Tstat, Df, Pval, BF10, MeanVal, StdVal);
-f = fopen(fullfile(results_dir, '020-behav-recogtask-tests.txt'), 'wt');
+f = fopen(fullfile(results_dir, '021-behav-recogtask-tests.txt'), 'wt');
 % disp(T) gives nice textual summary, which we want to put in a file, but
 % wihtout the <html> tags, and with NaN replaced by ''
 fprintf(f, strrep(regexprep(evalc('disp(T)'), '<strong>|</strong>', ''), 'NaN', '   '));

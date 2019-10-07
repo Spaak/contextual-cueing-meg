@@ -24,6 +24,10 @@ elseif strcmp(runmode, 'qsub')
 elseif strcmp(runmode, 'slavepool')
   fprintf('executing %s for all participants using existing slave pool in Torque cluster...\n', jobname);
   sl_sendbatch(jobname, all_ids);
+elseif strcmp(runmode, 'load-only')
+  fprintf('using existing intermediate results for job %s\n', jobname);
+else
+  error('invalid runmode: %s', runmode);
 end
 
 % now wait for the results to appear

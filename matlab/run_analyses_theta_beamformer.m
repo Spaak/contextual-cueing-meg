@@ -74,7 +74,7 @@ cfg.location = [42.9 -30.5 -9.3];
 ft_sourceplot(cfg, stat_interp);
 
 f = gcf();
-print('-r150', '-fillpage', f, fullfile(results_dir, '011-source-theta-beamformer-hipp-fig3b.pdf'), '-dpdf');
+print('-r150', '-fillpage', f, fullfile(results_dir, '012-source-theta-beamformer-hipp-fig3b.pdf'), '-dpdf');
 close(f);
 
 % second effect is in Superior Frontal
@@ -82,7 +82,7 @@ cfg.location = [-12.1 23.5 59.7];
 ft_sourceplot(cfg, stat_interp);
 
 f = gcf();
-print('-r150', '-fillpage', f, fullfile(results_dir, '012-source-theta-beamformer-frontal-fig3b.pdf'), '-dpdf');
+print('-r150', '-fillpage', f, fullfile(results_dir, '013-source-theta-beamformer-frontal-fig3b.pdf'), '-dpdf');
 close(f);
 
 end

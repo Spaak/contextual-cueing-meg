@@ -18,7 +18,7 @@ nargs = numel(varargin);
 njob = numel(varargin{1});
 
 matlabcmd = '/opt/matlab/R2017b/bin/matlab -nodesktop -nosplash';
-workingdir = '~/ctxcue/analysis-matlab-4archiving';
+workingdir = '~/ctxcue/4archiving/matlab';
 
 if dospread
   nodes = torque_getnodes();
