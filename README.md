@@ -1,6 +1,6 @@
-# Spaak & De Lange (2019) Analysis code
+# Spaak & De Lange (2019) analysis and experiment code
 
-This is the analysis code related to the Spaak & De Lange (2019) paper "Hippocampal and prefrontal theta-band mechanisms underpin implicit spatial context learning", [as published in The Journal of Neuroscience](https://www.jneurosci.org/content/early/2019/11/07/JNEUROSCI.1660-19.2019).
+This is the analysis and experiment code related to the Spaak & De Lange (2019) paper "Hippocampal and prefrontal theta-band mechanisms underpin implicit spatial context learning", [as published in The Journal of Neuroscience](https://www.jneurosci.org/content/early/2019/11/07/JNEUROSCI.1660-19.2019).
 
 ## Getting started
 
@@ -29,7 +29,7 @@ PyMC3 version used for the paper for is [24730cc](https://github.com/Spaak/pymc3
     * `matlab/run_all_analyses.m` - set `data_dir` to where you put the data from the repository.
     * `matlab/run_all_analyses.m` - set `results_dir` to where the results (figures and outputs of statistical tests) should appear. Will be created if it does not exist.
     * `matlab/set_path.m` - set the line referring to FieldTrip to point to where you installed FieldTrip.
-    * `matlab/lib/myqsub.m` - set `matlabcmd` to your Matlab executable (I recommend leaving the `nodesktop -nosplash` flags intact).
+    * `matlab/lib/myqsub.m` - set `matlabcmd` to your Matlab executable (I recommend leaving the `-nodesktop -nosplash` flags intact).
     * `matlab/lib/myqsub.m` - set `workingdir` to the Matlab working directory (usually the folder in which you cloned this repo + `/matlab`).
     * `python/analysis.py` - set `rootdir` to the same as Matlab's `data_dir` above.
     * `python/run_switchpoint_analyses.py` - set `working_dir` to the working directory of the Python script (usually the folder in which you cloned this repo + `/python`).
@@ -70,7 +70,7 @@ The analysis code starts either from the intermediate results (when `run_mode` e
 
 * `run_preproc_beforeica`
 * `run_preproc_ica`
-* `run_preproc_after_ica`
+* `run_preproc_afterica`
 
 You will probably need to change the default `rootdir` inside `datainfo` to point to the data from the repository.
 
