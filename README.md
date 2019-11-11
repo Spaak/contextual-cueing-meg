@@ -1,6 +1,6 @@
 # Spaak & De Lange (2019) Analysis code
 
-This is the analysis code related to Spaak & De Lange (2019) paper "Hippocampal and prefrontal theta-band mechanisms underpin implicit spatial context learning".
+This is the analysis code related to the Spaak & De Lange (2019) paper "Hippocampal and prefrontal theta-band mechanisms underpin implicit spatial context learning", [as published in The Journal of Neuroscience](https://www.jneurosci.org/content/early/2019/11/07/JNEUROSCI.1660-19.2019).
 
 ## Getting started
 
